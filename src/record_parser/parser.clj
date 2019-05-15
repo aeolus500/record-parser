@@ -2,7 +2,7 @@
   (:require [clojure.string :refer [split]]))
 
 (defn parse [line]
-  (let [[last first gender color birthdate] (split line #"\s*\|\s*|\s*\,\s*|\s")]
+  (let [[last first gender color birthdate] (split line #"\s*[\||,|\s]\s*")]
     {:first first
      :last last
      :gender gender
