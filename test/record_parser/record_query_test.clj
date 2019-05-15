@@ -13,8 +13,8 @@
                                        {:last "Bach" :gender "male"}
                                        {:last "Eastwood" :gender "female"}
                                        {:last "Abrams" :gender "male"}
-                                       ] :gender)))
-    )
+                                       ] :gender))))
+
   (testing "sorts by last name descending"
     (is (= [{:last "Zapata"} {:last "Abrams"}]
            (record-query/sort-records [{:last "Abrams"} {:last "Zapata"}] :last)))

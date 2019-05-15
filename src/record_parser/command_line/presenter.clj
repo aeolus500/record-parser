@@ -6,7 +6,7 @@
                        gender :gender
                        color :color
                        birthdate :birthdate}]
-  (str first-name " " last-name " " gender " " color " " (f/unparse (f/formatter "MM/dd/yyyy") birthdate)))
+  (clojure.string/join " " [first-name last-name gender color (f/unparse (f/formatter "M/d/yyyy") birthdate)]))
 
 (defn present [records]
   (clojure.string/join "\n" (map record->string records)))
