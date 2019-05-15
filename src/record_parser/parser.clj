@@ -1,8 +1,8 @@
 (ns record-parser.parser
-  (:require [clojure.string :refer [trim split]]))
+  (:require [clojure.string :refer [split]]))
 
-(defn parse [arg]
-  (let [[last first gender color birthdate] (map trim (split arg #"\||,"))]
+(defn parse [line]
+  (let [[last first gender color birthdate] (split line #"\s*\|\s*|\s*\,\s*|\s")]
     {:first first
      :last last
      :gender gender
