@@ -1,5 +1,7 @@
 (ns record-parser.parser
-  (:require [clojure.string :refer [split]]))
+  (:require
+    [clj-time.coerce :refer [from-string]]
+    [clojure.string :refer [split]]))
 
 (defn parse [line]
   (let [[last first gender color birthdate] (split line #"\s*[\||,|\s]\s*")]
@@ -7,4 +9,4 @@
      :last last
      :gender gender
      :color color
-     :birthdate birthdate}))
+     :birthdate (from-string birthdate)}))
