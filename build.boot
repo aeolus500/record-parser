@@ -5,32 +5,53 @@
           :source-paths   #{"test"}
           :dependencies   '[[org.clojure/clojure "RELEASE"]
                             [clj-time/clj-time "0.15.1"]
+                            [ring "1.7.1"]
                             [adzerk/boot-test "RELEASE" :scope "test"]])
 
 (task-options!
- aot {:namespace   #{'record-parser.core}}
- pom {:project     project
-      :version     version
-      :description "FIXME: write description"
-      :url         "http://example/FIXME"
-      :scm         {:url "https://github.com/yourname/record-parser"}
-      :license     {"Eclipse Public License"
-                    "http://www.eclipse.org/legal/epl-v10.html"}}
- repl {:init-ns    'record-parser.core}
- jar {:main        'record-parser.core
-      :file        (str "record-parser-" version "-standalone.jar")})
+  aot {:namespace   #{'record-parser.command-line.core}}
+  pom {:project     project
+       :version     version
+       :description "FIXME: write description"
+       :url         "http://example/FIXME"
+       :scm         {:url "https://github.com/yourname/record-parser"}
+       :license     {"Eclipse Public License"
+                     "http://www.eclipse.org/legal/epl-v10.html"}}
+  repl {:init-ns    'record-parser.command-line.core})
 
-(deftask build
+(deftask build-command-line
   "Build the project locally as a JAR."
   [d dir PATH #{str} "the set of directories to write to (target)."]
   (let [dir (if (seq dir) dir #{"target"})]
-    (comp (aot) (pom) (uber) (jar) (target :dir dir))))
+    (comp (aot)
+          (pom)
+          (uber)
+          (jar :main 'record-parser.command-line.core
+               :file (str "record-parser-command-line-" version "-standalone.jar"))
+          (target :dir dir))))
+
+(deftask build-web
+  "Build the web project locally as a JAR."
+  [d dir PATH #{str} "the set of directories to write to (target)."]
+  (let [dir (if (seq dir) dir #{"target"})]
+    (comp (aot)
+          (pom)
+          (uber)
+          (jar :main 'record-parser.web.core
+               :file (str "record-parser-web-" version "-standalone.jar"))
+          (target :dir dir))))
+
+(deftask run-web
+  "Run web server"
+  [p port PORT int "Server port (default 3000)"]
+  (require '[record-parser.web.core :as app])
+  (apply (resolve 'app/run-server) [(or port 3000)]))
 
 (deftask run
   "Run the project."
-  [a args ARG [str] "the arguments for the application."]
+  [a args ARG [str] "the arguments for the command line application."]
   (with-pass-thru fs
-    (require '[record-parser.core :as app])
+    (require '[record-parser.command-line.core :as app])
     (apply (resolve 'app/-main) args)))
 
 (require '[adzerk.boot-test :refer [test]])
