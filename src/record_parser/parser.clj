@@ -2,7 +2,7 @@
   (:require [clojure.string :refer [trim split]]))
 
 (defn parse [arg]
-  (let [[last first gender color birthdate] (map trim (split arg #","))]
+  (let [[last first gender color birthdate] (map trim (split arg #"\||,"))]
     {:first first
      :last last
      :gender gender
