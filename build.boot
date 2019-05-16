@@ -3,16 +3,18 @@
 
 (set-env! :resource-paths #{"resources" "src"}
           :source-paths   #{"test"}
-          :dependencies   '[[org.clojure/clojure "RELEASE"]
-                            [clj-time/clj-time "0.15.1"]
+          :dependencies   '[[clj-time/clj-time "0.15.1"]
+                            [org.clojure/clojure "1.10.0"]
                             [ring "1.7.1"]
+                            [ring/ring-json "0.4.0"]
+                            [ring/ring-mock "0.4.0" :scope "test"]
                             [adzerk/boot-test "RELEASE" :scope "test"]])
 
 (task-options!
   aot {:namespace   #{'record-parser.command-line.core}}
   pom {:project     project
        :version     version
-       :description "FIXME: write description"
+       :description "record parser"
        :url         "http://example/FIXME"
        :scm         {:url "https://github.com/yourname/record-parser"}
        :license     {"Eclipse Public License"
