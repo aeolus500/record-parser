@@ -4,7 +4,7 @@
             [record-parser.command-line.presenter :as presenter])
   (:gen-class))
 
-(defn run [file sort-type]
+(defn run [[file sort-type]]
   (->
     (slurp file)
     (clojure.string/split #"\n")
@@ -13,7 +13,5 @@
     (presenter/present)
     (println)))
 
-(defn -main
-  "I don't do a whole lot ... yet."
-  [& args]
+(defn -main [& args]
   (run args))
