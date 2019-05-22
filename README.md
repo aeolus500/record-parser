@@ -2,6 +2,8 @@
 
 Parses records
 
+installing [boot](https://github.com/boot-clj/boot#install)
+
 ### Command line
 
 Run the project directly for command line:
