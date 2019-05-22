@@ -1,50 +1,38 @@
 # record-parser
 
-FIXME: description
+Parses records
 
-## Installation
+### Command line
 
-Download from http://example.com/FIXME.
+Run the project directly for command line:
 
-## Usage
+    $ boot run -a ./path-to-file.txt -a <last|gender|birthdate>
 
-FIXME: explanation
-
-Run the project directly:
-
-    $ boot run
-
-Run the project's tests (they'll fail until you edit them):
+Run the project's tests:
 
     $ boot test
 
-Build an uberjar from the project:
+### Web
 
-    $ boot build
+Run the project directly for web:
 
-Run the uberjar:
-
-    $ java -jar target/record-parser-0.1.0-SNAPSHOT-standalone.jar [args]
-
-## Options
-
-FIXME: listing of options this app accepts.
+    $ boot run-web
 
 ## Examples
 
-...
+Console version:
 
-### Bugs
+    $ boot run -a ./path-to-records.txt birthdate
 
-...
+Web version:
 
-### Any Other Sections
-### That You Think
-### Might be Useful
+    $ curl -d "first last male red 1990-01-01" http://localhost:3000/records
+
+    $ curl http://localhost:3000/records/gender
 
 ## License
 
-Copyright © 2019 FIXME
+Copyright © 2019
 
 Distributed under the Eclipse Public License either version 1.0 or (at
 your option) any later version.

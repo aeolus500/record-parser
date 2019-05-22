@@ -21,39 +21,17 @@
                      "http://www.eclipse.org/legal/epl-v10.html"}}
   repl {:init-ns    'record-parser.command-line.core})
 
-(deftask build-command-line
-  "Build the project locally as a JAR."
-  [d dir PATH #{str} "the set of directories to write to (target)."]
-  (let [dir (if (seq dir) dir #{"target"})]
-    (comp (aot)
-          (pom)
-          (uber)
-          (jar :main 'record-parser.command-line.core
-               :file (str "record-parser-command-line-" version "-standalone.jar"))
-          (target :dir dir))))
-
-(deftask build-web
-  "Build the web project locally as a JAR."
-  [d dir PATH #{str} "the set of directories to write to (target)."]
-  (let [dir (if (seq dir) dir #{"target"})]
-    (comp (aot)
-          (pom)
-          (uber)
-          (jar :main 'record-parser.web.core
-               :file (str "record-parser-web-" version "-standalone.jar"))
-          (target :dir dir))))
-
-(deftask run-web
-  "Run web server"
-  [p port PORT int "Server port (default 3000)"]
-  (require '[record-parser.web.core :as app])
-  (apply (resolve 'app/run-server) [(or port 3000)]))
-
 (deftask run
   "Run the project."
   [a args ARG [str] "the arguments for the command line application."]
   (with-pass-thru fs
     (require '[record-parser.command-line.core :as app])
     (apply (resolve 'app/-main) args)))
+
+(deftask run-web
+  "Run web server"
+  [p port PORT int "Server port (default 3000)"]
+  (require '[record-parser.web.core :as app])
+  (apply (resolve 'app/run-server) [(or port 3000)]))
 
 (require '[adzerk.boot-test :refer [test]])
